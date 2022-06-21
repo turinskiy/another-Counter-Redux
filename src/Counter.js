@@ -1,33 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { ADD_ONE, MINUS_ONE } from "./redux/actions";
 
 const containerStyle = {
-  display: "flex"
+  display: "flex",
+  justifyContent: "center"
 };
 const buttonStyle = {
   fontSize: "1.5rem",
   width: "40px",
   height: "40px"
 };
+const mapStateToProps = (state) => ({
+  number: state.number
+});
 
 function Counter(props) {
-  const [number, setNumber] = useState(0);
-
   const addOne = () => {
-    setNumber((number) => number + 1);
+    props.dispatch({ type: ADD_ONE });
   };
   const minusOne = () => {
-    setNumber((number) => number + 1);
+    props.dispatch({ type: MINUS_ONE });
   };
 
   return (
     <div className="App">
       <header>
-        <h1>{number}</h1>
+        <h1>{props.number}</h1>
         <div style={containerStyle}>
-          <button onClick={addOne} type="button" style={buttonStyle}>
+          <button onClick={minusOne} type="button" style={buttonStyle}>
             -
           </button>
-          <button onClick={minusOne} type="button" style={buttonStyle}>
+          <button onClick={addOne} type="button" style={buttonStyle}>
             +
           </button>
         </div>
@@ -36,4 +40,5 @@ function Counter(props) {
   );
 }
 
-export default Counter;
+// export default Counter;
+export default connect(mapStateToProps)(Counter);
